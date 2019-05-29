@@ -7,16 +7,14 @@ using Ex3.Models.CommandsServer;
 
 namespace Ex3.Controllers
 {
-
     public class DataController : Controller
     {
         [HttpGet]
-        public ActionResult Option1(string ip, int port)
-
+        public ActionResult LocationDisplay(string arg1, int arg2)
         {
             CommandsServer commandsServer = CommandsServer.getInstance();
-            commandsServer.Ip = ip;
-            commandsServer.Port = port;
+            commandsServer.Ip = arg1;
+            commandsServer.Port = arg2;
             commandsServer.connect();
             double lon = commandsServer.write("get position/longitude-deg");
             double lat = commandsServer.write("get position/latitude-deg");
@@ -26,7 +24,7 @@ namespace Ex3.Controllers
         }
 
         [HttpGet]
-        public ActionResult Option2(string ip, int port, int samples)
+        public ActionResult RouteDisplay(string arg1, int arg2, int arg3)
         {
             //
             return View();

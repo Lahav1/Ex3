@@ -122,9 +122,9 @@
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Data\Option1.cshtml" />
+    <Content Include="Views\Data\LocationDisplay.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\Data\Option2.cshtml" />
+    <Content Include="Views\Data\RouteDisplay.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
