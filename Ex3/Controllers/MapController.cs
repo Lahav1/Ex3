@@ -7,7 +7,7 @@ using Ex3.Models.CommandsServer;
 
 namespace Ex3.Controllers
 {
-    public class DataController : Controller
+    public class MapController : Controller
     {
         [HttpGet]
         public ActionResult LocationDisplay(string arg1, int arg2)
@@ -30,19 +30,17 @@ namespace Ex3.Controllers
             commandsServer.Ip = arg1;
             commandsServer.Port = arg2;
             commandsServer.connect();
-            double lon = commandsServer.write("get position/longitude-deg");
-            double lat = commandsServer.write("get position/latitude-deg");
             return View();
         }
 
-        [HttpGet]
+        [HttpPost]
         public string GetValues()
         {
             CommandsServer commandsServer = CommandsServer.getInstance();
-            commandsServer.connect();
             double lon = commandsServer.write("get position/longitude-deg");
             double lat = commandsServer.write("get position/latitude-deg");
-            return lon.ToString() + " " + lat.ToString();
+            string str = lon.ToString() + " " + lat.ToString();
+            return str;
         }
     }
 }
