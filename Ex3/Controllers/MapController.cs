@@ -29,6 +29,7 @@ namespace Ex3.Controllers
             CommandsServer commandsServer = CommandsServer.getInstance();
             commandsServer.Ip = arg1;
             commandsServer.Port = arg2;
+            ViewBag.UpdateRate = arg3;
             commandsServer.connect();
             return View();
         }

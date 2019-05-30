@@ -16,7 +16,8 @@
 </div>
 
 <script>
-    var intervalTime = 5000;
+    var UpdateRate = @ViewBag.UpdateRate;
+    var intervalTime = UpdateRate * 1000;
     var addr = "@Url.Action("GetValues")";
         myTimer = (function () {
         $.post("@Url.Action("GetValues")").done(function (str) {
