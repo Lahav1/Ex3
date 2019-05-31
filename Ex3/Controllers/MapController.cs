@@ -33,6 +33,10 @@ namespace Ex3.Controllers
             commandsServer.Port = arg2;
             ViewBag.UpdateRate = arg3;
             commandsServer.connect();
+            double lon = commandsServer.write("get position/longitude-deg");
+            double lat = commandsServer.write("get position/latitude-deg");
+            ViewBag.FirstLon = lon;
+            ViewBag.FirstLat = lat;
             return View();
         }
 

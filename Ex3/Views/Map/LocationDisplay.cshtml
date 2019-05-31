@@ -30,7 +30,6 @@
         var normalLon = (Lon + 180) * (canvas.width / 360);
         var normalLat = (Lat + 90) * (canvas.height / 180);
 
-        ctx.beginPath();
         ctx.arc(normalLon, normalLat, 5, 0, 2 * Math.PI);
         ctx.fillStyle = "red";
         ctx.fill();
