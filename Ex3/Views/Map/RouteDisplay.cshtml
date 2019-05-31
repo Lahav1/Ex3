@@ -39,7 +39,7 @@
     ctx.stroke();
     ctx.moveTo(normalLon, normalLat);
 
-    myTimer = (function () {
+    displayAirplane = (function () {
         $.post("@Url.Action("GetValuesFromServer")").done(function (xml) {
             var xmlDoc = $.parseXML(xml),
             $xml = $(xmlDoc),
@@ -56,6 +56,6 @@
             ctx.moveTo(normalLon, normalLat);
         });
    });
-   setInterval(myTimer, intervalTime);
+    setInterval(displayAirplane, intervalTime);
 </script>
 

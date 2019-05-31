@@ -97,15 +97,7 @@ namespace Ex3.Models.CommandsServer
             return Convert.ToDouble(val);
         }
 
-        public void CreateFile(string fileName)
-        {
-            TextWriter objTextWriter = new StreamWriter(fileName);
-            objTextWriter.WriteLine(DateTime.Now); //Writing current time in textfile
-            objTextWriter.Close();
-
-        }
-
-
+  
         /// <summary>
         ///     Receives a message from the user / manual components, prepares it for sending and then passes
         ///     it to the server.

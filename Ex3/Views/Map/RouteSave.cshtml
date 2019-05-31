@@ -30,14 +30,10 @@
     var FirstLat = @ViewBag.FirstLat;
     var normalLat = (FirstLat + 90) * (canvas.height / 180);
 
-    var FirstRud =  @ViewBag.FirstRud;
-    var FirstThr =  @ViewBag.FirstThr;
-
     var UpdateRate = @ViewBag.UpdateRate;
     var intervalTime = UpdateRate * 1000;
 
     var TimeLimit = @ViewBag.TimeLimit * 1000;
-    var FileName = "@ViewBag.FileName";
 
     ctx.arc(normalLon, normalLat, 5, 0, 2 * Math.PI);
     ctx.strokeStyle = "red";
@@ -46,23 +42,35 @@
     ctx.stroke();
     ctx.moveTo(normalLon, normalLat);
 
-    myTimer = (function () {
-        $.post("@Url.Action("SaveValuesFromServer")", FileName).done(function (xml) {
-            var xmlDoc = $.parseXML(xml),
-            $xml = $(xmlDoc),
-            Lon = $xml.find("Lon").text();
-            Lat = $xml.find("Lat").text();
-            Lon = parseFloat(Lon.valueOf());
-            Lat = parseFloat(Lat.valueOf());
+    var iterNum = parseFloat(TimeLimit) / parseFloat(intervalTime);
+    var iterNum = Math.floor(iterNum);
 
-            var normalLon = (Lon + 180) * (canvas.width / 360);
-            var normalLat = (Lat + 90) * (canvas.height / 180);
+    $.post("@Url.Action("SaveValuesFromServer")");
+    iterNum = iterNum - 1;
 
-            ctx.lineTo(normalLon, normalLat);
-            ctx.stroke();
-            ctx.moveTo(normalLon, normalLat);
+    displayAirplane = (function () {
+        $.post("@Url.Action("SaveValuesFromServer")").done(function (xml) {
+            if (iterNum == 0) {
+                clearInterval(id);
+            } else {
+                var xmlDoc = $.parseXML(xml),
+                    $xml = $(xmlDoc),
+                    Lon = $xml.find("Lon").text();
+                Lat = $xml.find("Lat").text();
+                Lon = parseFloat(Lon.valueOf());
+                Lat = parseFloat(Lat.valueOf());
+
+                var normalLon = (Lon + 180) * (canvas.width / 360);
+                var normalLat = (Lat + 90) * (canvas.height / 180);
+
+                ctx.lineTo(normalLon, normalLat);
+                ctx.stroke();
+                ctx.moveTo(normalLon, normalLat);
+
+                iterNum = iterNum - 1;
+            }
         });
-   });
-   setInterval(myTimer, intervalTime);
+    });
+    var id = setInterval(displayAirplane, intervalTime);
 </script>
 

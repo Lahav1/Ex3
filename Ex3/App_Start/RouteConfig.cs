@@ -20,7 +20,7 @@ namespace Ex3
                 );
 
             routes.MapRoute("LocationDisplay", "display/{arg1}/{arg2}", 
-                defaults: new {controller = "Map", action = "LocationDisplay" });
+                defaults: new {controller = "Map", action = "TwoArgs" });
 
             routes.MapRoute("RouteDisplay", "display/{arg1}/{arg2}/{arg3}",
                 defaults: new { controller = "Map", action = "RouteDisplay" });

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
@@ -12,6 +13,8 @@ namespace Ex3.Controllers
 {
     public class MapController : Controller
     {
+        private static string filePath;
+
         [HttpGet]
         public ActionResult LocationDisplay(string arg1, int arg2)
         {
@@ -23,7 +26,7 @@ namespace Ex3.Controllers
             double lat = commandsServer.write("get position/latitude-deg");
             ViewBag.Lon = lon;
             ViewBag.Lat = lat;
-            return View();
+            return View("~/Views/Map/LocationDisplay.cshtml");
         }
 
         [HttpGet]
@@ -51,17 +54,12 @@ namespace Ex3.Controllers
             commandsServer.connect();
             double lon = commandsServer.write("get position/longitude-deg");
             double lat = commandsServer.write("get position/latitude-deg");
-            double rudder = commandsServer.write("get controls/flight/rudder");
-            double throttle = commandsServer.write("get controls/engines/current-engine/throttle");
             ViewBag.FirstLon = lon;
             ViewBag.FirstLat = lat;
-            ViewBag.FirstRud = rudder;
-            ViewBag.FirstThr = throttle;
             ViewBag.TimeLimit = arg4;
-            string fileName = arg5 + ".txt";
-            ViewBag.FileName = fileName;
-            commandsServer.CreateFile(fileName);
-            
+            filePath = @"D:\" + arg5 + ".txt";
+            TextWriter file = new StreamWriter(filePath);
+            file.Close();
             return View();
         }
 
@@ -78,7 +76,7 @@ namespace Ex3.Controllers
         }
 
         [HttpPost]
-        public string SaveValuesFromServer(string fileName)
+        public string SaveValuesFromServer()
         {
             CommandsServer commandsServer = CommandsServer.getInstance();
             commandsServer.connect();
@@ -86,7 +84,9 @@ namespace Ex3.Controllers
             double lat = commandsServer.write("get position/latitude-deg");
             double rudder = commandsServer.write("get controls/flight/rudder");
             double throttle = commandsServer.write("get controls/engines/current-engine/throttle");
-            return ToXML(lon.ToString() + " " + lat.ToString() + " " + rudder.ToString() + " " + throttle.ToString());
+            string values = lon.ToString() + " " + lat.ToString() + " " + rudder.ToString() + " " + throttle.ToString();
+            System.IO.File.AppendAllText(filePath, string.Format("{0}{1}", values, Environment.NewLine));
+            return ToXML(values);
         }
 
         public string ToXML(string coordinates)
@@ -105,6 +105,28 @@ namespace Ex3.Controllers
             writer.WriteEndDocument();
             writer.Flush();
             return sb.ToString();
+        }
+
+        public Boolean isIP(string addr)
+        {
+            IPAddress address;
+            if (IPAddress.TryParse(addr, out address))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        [HttpGet]
+        public void TwoArgs(string arg1, string arg2)
+        {
+            if (isIP(arg1))
+            {
+                LocationDisplay(arg1, Int32.Parse(arg2));
+            }
         }
     }
 }
