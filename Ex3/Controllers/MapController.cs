@@ -14,6 +14,7 @@ namespace Ex3.Controllers
     public class MapController : Controller
     {
         private static string filePath;
+        private static List<string> lineList;
 
         [HttpGet]
         public ActionResult LocationDisplay(string arg1, int arg2)
@@ -107,7 +108,7 @@ namespace Ex3.Controllers
             return sb.ToString();
         }
 
-        public Boolean isIP(string addr)
+        public bool isIP(string addr)
         {
             IPAddress address;
             if (IPAddress.TryParse(addr, out address))
@@ -121,11 +122,45 @@ namespace Ex3.Controllers
         }
 
         [HttpGet]
-        public void TwoArgs(string arg1, string arg2)
+        public ActionResult LoadRoute(string arg1, int arg2)
+        {
+            filePath = @"D:\" + arg1 + ".txt";
+            var lineArr = System.IO.File.ReadAllLines(filePath);
+            lineList = new List<string>(lineArr);
+            ViewBag.UpdateRate = arg2;
+
+            var initialValues = lineList.ElementAt(0).Split(' ');
+
+            double lon = Double.Parse(initialValues[0]);
+            double lat = Double.Parse(initialValues[1]);
+            ViewBag.FirstLon = lon;
+            ViewBag.FirstLat = lat;
+
+            lineList.Remove(lineList.ElementAt(0));
+
+            return View("~/Views/Map/LoadRoute.cshtml");
+        }
+
+        [HttpPost]
+        public string GetValuesFromFile()
+        {
+            string lineXML = ToXML(lineList.ElementAt(0));
+            if (lineList.Count > 1)
+            {
+                lineList.Remove(lineList.ElementAt(0));
+            }
+            return lineXML;
+        }
+
+        [HttpGet]
+        public ActionResult TwoArgs(string arg1, string arg2)
         {
             if (isIP(arg1))
             {
-                LocationDisplay(arg1, Int32.Parse(arg2));
+                return LocationDisplay(arg1, Int32.Parse(arg2));
+            } else
+            {
+                return LoadRoute(arg1, Int32.Parse(arg2));
             }
         }
     }
