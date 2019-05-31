@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net.Sockets;
 using System.Text;
 
@@ -94,6 +95,14 @@ namespace Ex3.Models.CommandsServer
             val = val.Replace("(double)\r\n/>", "");
             val = val.Trim();
             return Convert.ToDouble(val);
+        }
+
+        public void CreateFile(string fileName)
+        {
+            TextWriter objTextWriter = new StreamWriter(fileName);
+            objTextWriter.WriteLine(DateTime.Now); //Writing current time in textfile
+            objTextWriter.Close();
+
         }
 
 

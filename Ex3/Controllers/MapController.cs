@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -57,7 +58,10 @@ namespace Ex3.Controllers
             ViewBag.FirstRud = rudder;
             ViewBag.FirstThr = throttle;
             ViewBag.TimeLimit = arg4;
-            ViewBag.FileName = arg5;
+            string fileName = arg5 + ".txt";
+            ViewBag.FileName = fileName;
+            commandsServer.CreateFile(fileName);
+            
             return View();
         }
 
