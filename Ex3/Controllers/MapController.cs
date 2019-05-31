@@ -40,14 +40,49 @@ namespace Ex3.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult RouteSave(string arg1, int arg2, int arg3, int arg4, string arg5)
+        {
+            CommandsServer commandsServer = CommandsServer.getInstance();
+            commandsServer.Ip = arg1;
+            commandsServer.Port = arg2;
+            ViewBag.UpdateRate = arg3;
+            commandsServer.connect();
+            double lon = commandsServer.write("get position/longitude-deg");
+            double lat = commandsServer.write("get position/latitude-deg");
+            double rudder = commandsServer.write("get controls/flight/rudder");
+            double throttle = commandsServer.write("get controls/engines/current-engine/throttle");
+            ViewBag.FirstLon = lon;
+            ViewBag.FirstLat = lat;
+            ViewBag.FirstRud = rudder;
+            ViewBag.FirstThr = throttle;
+            ViewBag.TimeLimit = arg4;
+            ViewBag.FileName = arg5;
+            return View();
+        }
+
         [HttpPost]
-        public string GetValues()
+        public string GetValuesFromServer()
         {
             CommandsServer commandsServer = CommandsServer.getInstance();
             commandsServer.connect();
             double lon = commandsServer.write("get position/longitude-deg");
             double lat = commandsServer.write("get position/latitude-deg");
-            return ToXML(lon.ToString() + " " + lat.ToString());
+            double rudder = commandsServer.write("get controls/flight/rudder");
+            double throttle = commandsServer.write("get controls/engines/current-engine/throttle");
+            return ToXML(lon.ToString() + " " + lat.ToString() + " " + rudder.ToString() + " " + throttle.ToString());
+        }
+
+        [HttpPost]
+        public string SaveValuesFromServer(string fileName)
+        {
+            CommandsServer commandsServer = CommandsServer.getInstance();
+            commandsServer.connect();
+            double lon = commandsServer.write("get position/longitude-deg");
+            double lat = commandsServer.write("get position/latitude-deg");
+            double rudder = commandsServer.write("get controls/flight/rudder");
+            double throttle = commandsServer.write("get controls/engines/current-engine/throttle");
+            return ToXML(lon.ToString() + " " + lat.ToString() + " " + rudder.ToString() + " " + throttle.ToString());
         }
 
         public string ToXML(string coordinates)
@@ -60,6 +95,8 @@ namespace Ex3.Controllers
             string[] temp = coordinates.Split(' ');
             writer.WriteElementString("Lon", temp[0]);
             writer.WriteElementString("Lat", temp[1]);
+            writer.WriteElementString("Rud", temp[2]);
+            writer.WriteElementString("Thr", temp[3]);
             writer.WriteEndElement();
             writer.WriteEndDocument();
             writer.Flush();

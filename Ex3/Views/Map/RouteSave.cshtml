@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "RouteDisplay";
+    ViewBag.Title = "RouteSave";
 }
 
 <div>
@@ -24,13 +24,20 @@
     ctx.canvas.width = canvas.width;
     ctx.canvas.height = canvas.height;
     ctx.beginPath();
-
-    var UpdateRate = @ViewBag.UpdateRate;
-    var intervalTime = UpdateRate * 1000;
+    
     var FirstLon = @ViewBag.FirstLon;
     var normalLon = (FirstLon + 180) * (canvas.width / 360);
     var FirstLat = @ViewBag.FirstLat;
     var normalLat = (FirstLat + 90) * (canvas.height / 180);
+
+    var FirstRud =  @ViewBag.FirstRud;
+    var FirstThr =  @ViewBag.FirstThr;
+
+    var UpdateRate = @ViewBag.UpdateRate;
+    var intervalTime = UpdateRate * 1000;
+
+    var TimeLimit = @ViewBag.TimeLimit * 1000;
+    var FileName = "@ViewBag.FileName";
 
     ctx.arc(normalLon, normalLat, 5, 0, 2 * Math.PI);
     ctx.strokeStyle = "red";
@@ -40,14 +47,14 @@
     ctx.moveTo(normalLon, normalLat);
 
     myTimer = (function () {
-        $.post("@Url.Action("GetValuesFromServer")").done(function (xml) {
+        $.post("@Url.Action("SaveValuesFromServer")", FileName).done(function (xml) {
             var xmlDoc = $.parseXML(xml),
             $xml = $(xmlDoc),
             Lon = $xml.find("Lon").text();
             Lat = $xml.find("Lat").text();
             Lon = parseFloat(Lon.valueOf());
             Lat = parseFloat(Lat.valueOf());
-                   
+
             var normalLon = (Lon + 180) * (canvas.width / 360);
             var normalLat = (Lat + 90) * (canvas.height / 180);
 

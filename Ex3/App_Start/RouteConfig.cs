@@ -24,6 +24,9 @@ namespace Ex3
 
             routes.MapRoute("RouteDisplay", "display/{arg1}/{arg2}/{arg3}",
                 defaults: new { controller = "Map", action = "RouteDisplay" });
+
+            routes.MapRoute("RouteSave", "save/{arg1}/{arg2}/{arg3}/{arg4}/{arg5}",
+                defaults: new { controller = "Map", action = "RouteSave" });
         }
 
     }
