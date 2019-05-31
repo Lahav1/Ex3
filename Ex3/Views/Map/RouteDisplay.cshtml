@@ -18,9 +18,15 @@
 <script>
     var UpdateRate = @ViewBag.UpdateRate;
     var intervalTime = UpdateRate * 1000;
-    var addr = "@Url.Action("GetValues")";
         myTimer = (function () {
-        $.post("@Url.Action("GetValues")").done(function (str) {
+        $.post("@Url.Action("GetValues")").done(function (xml) {
+            var xmlDoc = $.parseXML(xml),
+            $xml = $(xmlDoc),
+            Lon = $xml.find("Lon").text();
+            Lat = $xml.find("Lat").text();
+            Lon = parseFloat(Lon.valueOf());
+            Lat = parseFloat(Lat.valueOf());
+
             var canvas = document.getElementById("myCanvas");
             var dimension = [document.documentElement.clientWidth, document.documentElement.clientHeight];
             canvas.width = dimension[0];
@@ -28,9 +34,7 @@
             var ctx = canvas.getContext("2d");
             ctx.canvas.width = canvas.width;
             ctx.canvas.height = canvas.height;
-            var values = str.split(" ");
-            Lon = parseFloat(values[0]);
-            Lat = parseFloat(values[1]);
+            
             var normalLon = (Lon + 180) * (canvas.width / 360);
             var normalLat = (Lat + 90) * (canvas.height / 180);
             ctx.beginPath();
@@ -39,7 +43,7 @@
             ctx.fill();
             ctx.stroke();
         });
-    });
-    setInterval(myTimer, intervalTime);
+   });
+   setInterval(myTimer, intervalTime);
 </script>
 

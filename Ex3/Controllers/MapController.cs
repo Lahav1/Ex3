@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Xml;
 using Ex3.Models.CommandsServer;
 
 namespace Ex3.Controllers
@@ -38,10 +40,26 @@ namespace Ex3.Controllers
         public string GetValues()
         {
             CommandsServer commandsServer = CommandsServer.getInstance();
+            commandsServer.connect();
             double lon = commandsServer.write("get position/longitude-deg");
             double lat = commandsServer.write("get position/latitude-deg");
-            string str = lon.ToString() + " " + lat.ToString();
-            return str;
+            return ToXML(lon.ToString() + " " + lat.ToString());
+        }
+
+        public string ToXML(string coordinates)
+        {
+            StringBuilder sb = new StringBuilder();
+            XmlWriterSettings settings = new XmlWriterSettings();
+            XmlWriter writer = XmlWriter.Create(sb, settings);
+            writer.WriteStartDocument();
+            writer.WriteStartElement("coordinates");
+            string[] temp = coordinates.Split(' ');
+            writer.WriteElementString("Lon", temp[0]);
+            writer.WriteElementString("Lat", temp[1]);
+            writer.WriteEndElement();
+            writer.WriteEndDocument();
+            writer.Flush();
+            return sb.ToString();
         }
     }
 }
