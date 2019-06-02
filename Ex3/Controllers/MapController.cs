@@ -58,7 +58,7 @@ namespace Ex3.Controllers
             ViewBag.FirstLon = lon;
             ViewBag.FirstLat = lat;
             ViewBag.TimeLimit = arg4;
-            filePath = @"D:\" + arg5 + ".txt";
+            filePath = @"~/App_Data/" + arg5 + ".txt";
             TextWriter file = new StreamWriter(filePath);
             file.Close();
             return View();
@@ -124,7 +124,7 @@ namespace Ex3.Controllers
         [HttpGet]
         public ActionResult LoadRoute(string arg1, int arg2)
         {
-            filePath = @"D:\" + arg1 + ".txt";
+            filePath = "~/App_Data/" + arg1 + ".txt";
             var lineArr = System.IO.File.ReadAllLines(filePath);
             lineList = new List<string>(lineArr);
             ViewBag.UpdateRate = arg2;
