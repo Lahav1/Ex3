@@ -43,33 +43,33 @@
     ctx.moveTo(normalLon, normalLat);
 
     var iterNum = parseFloat(TimeLimit) / parseFloat(intervalTime);
-    var iterNum = Math.floor(iterNum);
+    var iterNum = Math.ceil(iterNum);
 
     $.post("@Url.Action("SaveValuesFromServer")");
     iterNum = iterNum - 1;
 
     displayAirplane = (function () {
-        $.post("@Url.Action("SaveValuesFromServer")").done(function (xml) {
-            if (iterNum == 0) {
-                clearInterval(id);
-            } else {
-                var xmlDoc = $.parseXML(xml),
-                    $xml = $(xmlDoc),
-                    Lon = $xml.find("Lon").text();
-                Lat = $xml.find("Lat").text();
-                Lon = parseFloat(Lon.valueOf());
-                Lat = parseFloat(Lat.valueOf());
+        if (iterNum == 0) {
+            clearInterval(id);
+        } else {
+            $.post("@Url.Action("SaveValuesFromServer")").done(function (xml) {
+            var xmlDoc = $.parseXML(xml),
+                $xml = $(xmlDoc),
+                Lon = $xml.find("Lon").text();
+            Lat = $xml.find("Lat").text();
+            Lon = parseFloat(Lon.valueOf());
+            Lat = parseFloat(Lat.valueOf());
 
-                var normalLon = (Lon + 180) * (canvas.width / 360);
-                var normalLat = (Lat + 90) * (canvas.height / 180);
+            var normalLon = (Lon + 180) * (canvas.width / 360);
+            var normalLat = (Lat + 90) * (canvas.height / 180);
 
-                ctx.lineTo(normalLon, normalLat);
-                ctx.stroke();
-                ctx.moveTo(normalLon, normalLat);
+            ctx.lineTo(normalLon, normalLat);
+            ctx.stroke();
+            ctx.moveTo(normalLon, normalLat);
 
-                iterNum = iterNum - 1;
-            }
-        });
+            iterNum = iterNum - 1;
+            });
+        }  
     });
     var id = setInterval(displayAirplane, intervalTime);
 </script>

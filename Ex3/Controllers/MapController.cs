@@ -13,8 +13,9 @@ namespace Ex3.Controllers
 {
     public class MapController : Controller
     {
-        private static string filePath;
         private static List<string> lineList;
+        public const string SCENARIO_FILE = "~/App_Data/{0}.txt";
+        private static string filePath;
 
         [HttpGet]
         public ActionResult LocationDisplay(string arg1, int arg2)
@@ -58,7 +59,7 @@ namespace Ex3.Controllers
             ViewBag.FirstLon = lon;
             ViewBag.FirstLat = lat;
             ViewBag.TimeLimit = arg4;
-            filePath = @"~/App_Data/" + arg5 + ".txt";
+            filePath = System.Web.HttpContext.Current.Server.MapPath(String.Format(SCENARIO_FILE, arg5));
             TextWriter file = new StreamWriter(filePath);
             file.Close();
             return View();
@@ -124,7 +125,7 @@ namespace Ex3.Controllers
         [HttpGet]
         public ActionResult LoadRoute(string arg1, int arg2)
         {
-            filePath = "~/App_Data/" + arg1 + ".txt";
+            filePath = System.Web.HttpContext.Current.Server.MapPath(String.Format(SCENARIO_FILE, arg1));
             var lineArr = System.IO.File.ReadAllLines(filePath);
             lineList = new List<string>(lineArr);
             ViewBag.UpdateRate = arg2;
