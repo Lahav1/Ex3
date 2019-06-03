@@ -16,6 +16,7 @@
 </div>
 
 <script>
+    <!-- Strech the worlds map to fit the entire browser windows on a 2D plane -->
     var canvas = document.getElementById("myCanvas");
     var dimension = [document.documentElement.clientWidth, document.documentElement.clientHeight];
     canvas.width = dimension[0];
@@ -25,13 +26,16 @@
     ctx.canvas.height = canvas.height;
     ctx.beginPath();
 
+    <!-- Extract parameters from controller  -->
     var UpdateRate = @ViewBag.UpdateRate;
     var intervalTime = UpdateRate * 1000;
+    <!-- Normalize waypoints  -->
     var FirstLon = @ViewBag.FirstLon;
     var normalLon = (FirstLon + 180) * (canvas.width / 360);
     var FirstLat = @ViewBag.FirstLat;
     var normalLat = (FirstLat + 90) * (canvas.height / 180);
 
+    <!-- Display first way point  -->
     ctx.arc(normalLon, normalLat, 5, 0, 2 * Math.PI);
     ctx.strokeStyle = "red";
     ctx.fillStyle = "red";
@@ -39,6 +43,7 @@
     ctx.stroke();
     ctx.moveTo(normalLon, normalLat);
 
+    <!-- Load all other way points from XML file and display them on the map after they were normalized  -->
     displayAirplane = (function () {
         $.post("@Url.Action("GetValuesFromFile")").done(function (xml) {
             var xmlDoc = $.parseXML(xml),

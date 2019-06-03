@@ -16,6 +16,7 @@
 </div>
 
 <script>
+    <!-- Strech the worlds map to fit the entire browser windows on a 2D plane -->
     var canvas = document.getElementById("myCanvas");
     var dimension = [document.documentElement.clientWidth, document.documentElement.clientHeight];
     canvas.width = dimension[0];
@@ -24,7 +25,8 @@
     ctx.canvas.width = canvas.width;
     ctx.canvas.height = canvas.height;
     ctx.beginPath();
-    
+
+    <!-- Extract parameters from controller  -->
     var FirstLon = @ViewBag.FirstLon;
     var normalLon = (FirstLon + 180) * (canvas.width / 360);
     var FirstLat = @ViewBag.FirstLat;
@@ -32,9 +34,9 @@
 
     var UpdateRate = @ViewBag.UpdateRate;
     var intervalTime = UpdateRate * 1000;
-
     var TimeLimit = @ViewBag.TimeLimit * 1000;
 
+    <!-- Display first way point  -->
     ctx.arc(normalLon, normalLat, 5, 0, 2 * Math.PI);
     ctx.strokeStyle = "red";
     ctx.fillStyle = "red";
@@ -69,7 +71,7 @@
 
             iterNum = iterNum - 1;
             });
-        }  
+        }
     });
     var id = setInterval(displayAirplane, intervalTime);
 </script>

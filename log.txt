@@ -1,3 +1,81 @@
+commit 53eb62e27747ecc68202386bc0d5d536d3e38490
+Author: Lahav <Lahav016@gmail.com>
+Date:   Sun Jun 2 14:50:24 2019 +0300
+
+    fixed path issues. saves to "/App-Data".
+
+commit 48fee98940250f90e9f415309f80a793eb11bb53
+Author: Lahav <Lahav016@gmail.com>
+Date:   Sun Jun 2 14:07:55 2019 +0300
+
+    file path issues.
+
+commit f96076302624c455448e53107095b4a8bfd18207
+Author: Lahav <Lahav016@gmail.com>
+Date:   Fri May 31 19:14:51 2019 +0300
+
+    finished part 4 (load route from file).
+
+commit fca324a450654327a4e39cdb806b88ba1113b1c7
+Author: Lahav <Lahav016@gmail.com>
+Date:   Fri May 31 18:28:37 2019 +0300
+
+    part 3 working (need to fix absolute path).
+
+commit 21d770164eb195b07fdd293f61260a2d05486839
+Author: Lahav <Lahav016@gmail.com>
+Date:   Fri May 31 16:24:20 2019 +0300
+
+    added file creation (not working yet)
+
+commit 7d1d731a334d1d234e03a48790acc853a88ba356
+Author: Lahav <Lahav016@gmail.com>
+Date:   Fri May 31 14:54:13 2019 +0300
+
+    viewbag updates part 3.
+
+commit 55a5d15b61366db75872705f4a48325151f8c3c4
+Author: Lahav <Lahav016@gmail.com>
+Date:   Fri May 31 14:00:52 2019 +0300
+
+    added route drawing.
+
+commit c5bfd6ae64e67bb5ab9f8c4d39898a9a339a5e9e
+Author: Lahav <Lahav016@gmail.com>
+Date:   Fri May 31 13:02:23 2019 +0300
+
+    working with xml instead of simple string.
+
+commit fe6e37bbec7593355d91d198b5eba8471ffefb0f
+Author: Lahav <Lahav016@gmail.com>
+Date:   Fri May 31 02:11:59 2019 +0300
+
+    get update rate from view bag.
+
+commit 3d9f99e506437f311b771e14a3477da94bc45230
+Author: Lahav <Lahav016@gmail.com>
+Date:   Fri May 31 02:03:14 2019 +0300
+
+    added ajax post for refreshing the plane's location.
+
+commit 84f03f3e74567964c82e2c76c3d55b67f7dc1315
+Author: Lahav <Lahav016@gmail.com>
+Date:   Thu May 30 19:49:30 2019 +0300
+
+    added route view (not working yet).
+
+commit 71d3a4909e46d987cc0ef0f4c187c58c30b0ff6f
+Author: Lahav <Lahav016@gmail.com>
+Date:   Thu May 30 01:12:56 2019 +0300
+
+    replaced packages.
+
+commit 88095e3ecd0fa1cbe267286c1c31ce3810985aba
+Author: Lahav <Lahav016@gmail.com>
+Date:   Wed May 29 01:12:21 2019 +0300
+
+    Option1 finished (need to improve accuracy).
+
 commit fe973d0915e1150fbc16e9e0a76ada003ac0cc94
 Author: Lahav <Lahav016@gmail.com>
 Date:   Tue May 28 15:13:24 2019 +0300
