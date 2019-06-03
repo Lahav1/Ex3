@@ -39,6 +39,13 @@ namespace Ex3.Controllers
             return View("~/Views/Map/LocationDisplay.cshtml");
         }
 
+        /// <summary>
+        ///     Controls the route display screen.
+        /// </summary>
+        /// <param name="arg1"> server IP. </param>
+        /// <param name="arg2"> server port. </param>
+        /// <param name="arg3"> update rate. </param>
+        /// <returns> view of route display display screen. </returns>
         [HttpGet]
         public ActionResult RouteDisplay(string arg1, int arg2, int arg3)
         {
@@ -56,6 +63,15 @@ namespace Ex3.Controllers
             return View();
         }
 
+        /// <summary>
+        ///     Controls the route save screen, which displays the sampled location and saves them to txt file.
+        /// </summary>
+        /// <param name="arg1"> server IP. </param>
+        /// <param name="arg2"> server port. </param>
+        /// <param name="arg3"> update rate. </param>
+        /// <param name="arg4"> time limit. </param>
+        /// <param name="arg5"> file name. </param>
+        /// <returns> view of route save & display screen. </returns>
         [HttpGet]
         public ActionResult RouteSave(string arg1, int arg2, int arg3, int arg4, string arg5)
         {
@@ -79,6 +95,10 @@ namespace Ex3.Controllers
             return View();
         }
 
+        /// <summary>
+        ///     Requests values of: longitude, latitude, rudder, throttle from server.
+        /// </summary>
+        /// <returns> values in XML format. </returns>
         [HttpPost]
         public string GetValuesFromServer()
         {
@@ -94,6 +114,11 @@ namespace Ex3.Controllers
             return ToXML(lon.ToString() + " " + lat.ToString() + " " + rudder.ToString() + " " + throttle.ToString());
         }
 
+        /// <summary>
+        ///     Requests values of: longitude, latitude, rudder, throttle from server,
+        ///     and save the values string on a txt file.
+        /// </summary>
+        /// <returns> values in XML format. </returns>
         [HttpPost]
         public string SaveValuesFromServer()
         {
@@ -113,6 +138,11 @@ namespace Ex3.Controllers
             return ToXML(values);
         }
 
+        /// <summary>
+        ///     Converts a values string separated by spaces to XML formatted string.
+        /// </summary>
+        /// <param name="coordinates"> string of values. </param>
+        /// <returns> XML of values. </returns>
         public string ToXML(string coordinates)
         {
             StringBuilder sb = new StringBuilder();
@@ -134,6 +164,11 @@ namespace Ex3.Controllers
             return sb.ToString();
         }
 
+        /// <summary>
+        ///     Checks if a given string is an IP address.
+        /// </summary>
+        /// <param name="addr"> string which may represent an IP address. </param>
+        /// <returns> true if string is an IP. </returns>
         public bool isIP(string addr)
         {
             // check if the string represents an ip address.
@@ -148,6 +183,12 @@ namespace Ex3.Controllers
             }
         }
 
+        /// <summary>
+        ///     Draws the plane's route requesting the location coordinates from file instead of server.
+        /// </summary>
+        /// <param name="arg1"> file name. </param>
+        /// <param name="arg2"> update rate. </param>
+        /// <returns> Load route view. </returns>
         [HttpGet]
         public ActionResult LoadRoute(string arg1, int arg2)
         {
@@ -169,6 +210,10 @@ namespace Ex3.Controllers
             return View("~/Views/Map/LoadRoute.cshtml");
         }
 
+        /// <summary>
+        ///     Requests values of: longitude, latitude, rudder, throttle from file.
+        /// </summary>
+        /// <returns> values in XML format. </returns>
         [HttpPost]
         public string GetValuesFromFile()
         {
@@ -186,6 +231,12 @@ namespace Ex3.Controllers
             return lineXML;
         }
 
+        /// <summary>
+        ///     In case of url format "display/{arg1}/{arg2}", decides between location display view and load route display.
+        /// </summary>
+        /// <param name="arg1"> file name or IP address. </param>
+        /// <param name="arg2"> update rate or port. </param>
+        /// <returns> matching view. </returns>
         [HttpGet]
         public ActionResult TwoArgs(string arg1, string arg2)
         {
