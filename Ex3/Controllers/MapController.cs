@@ -155,6 +155,7 @@ namespace Ex3.Controllers
             filePath = System.Web.HttpContext.Current.Server.MapPath(String.Format(SCENARIO_FILE, arg1));
             var lineArr = System.IO.File.ReadAllLines(filePath);
             lineList = new List<string>(lineArr);
+            lineList.Add("Finished");
             // pass update rate through viewbag.
             ViewBag.UpdateRate = arg2;
             // split line by spaces and pass the initial values through viewbag, to draw the starting point.
@@ -171,6 +172,10 @@ namespace Ex3.Controllers
         [HttpPost]
         public string GetValuesFromFile()
         {
+            if (lineList.ElementAt(0) == "Finished")
+            {
+                return lineList.ElementAt(0);
+            }
             // create an xml from first line. 
             string lineXML = ToXML(lineList.ElementAt(0));
             // if there is more than 1 line, remove the first line.

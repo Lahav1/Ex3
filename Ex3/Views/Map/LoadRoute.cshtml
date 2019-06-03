@@ -46,6 +46,10 @@
     <!-- Load all other way points from XML file and display them on the map after they were normalized  -->
     displayAirplane = (function () {
         $.post("@Url.Action("GetValuesFromFile")").done(function (xml) {
+            if (xml == "Finished") {
+                alert(xml);
+                clearInterval(id);
+            }
             var xmlDoc = $.parseXML(xml),
             $xml = $(xmlDoc),
             Lon = $xml.find("Lon").text();
@@ -61,6 +65,6 @@
             ctx.moveTo(normalLon, normalLat);
         });
    });
-    setInterval(displayAirplane, intervalTime);
+    var id = setInterval(displayAirplane, intervalTime);
 </script>
 
